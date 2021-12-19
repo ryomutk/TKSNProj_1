@@ -36,23 +36,26 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Utility\InstantPool.cs" />
+     <Compile Include="Assets\Scripts\Task\ITask.cs" />
+     <Compile Include="Assets\Scripts\Task\SmallTask.cs" />
+     <Compile Include="Assets\IEventArg.cs" />
+     <Compile Include="Assets\Scripts\Utility\SingleVariantScriptableObject.cs" />
+     <Compile Include="Assets\EventName.cs" />
+     <Compile Include="Assets\Scripts\Utility\LogWrighter.cs" />
      <Compile Include="Assets\Aevus\EmergencyExit\EmergencyExit.cs" />
      <Compile Include="Assets\Aevus\EmergencyExit\CreateInfiniteLoopDemo.cs" />
-     <Compile Include="Assets\EventManager.cs" />
-     <Compile Include="Assets\EventName.cs" />
-     <Compile Include="Assets\Scripts\Task\SmallTask.cs" />
-     <Compile Include="Assets\Scripts\Task\ITask.cs" />
-     <Compile Include="Assets\IEventArg.cs" />
-     <Compile Include="Assets\Scripts\Utility\IInteraptor.cs" />
-     <Compile Include="Assets\Scripts\Utility\SerializableDictionary.cs" />
-     <Compile Include="Assets\Scripts\Utility\LogWrighter.cs" />
-     <Compile Include="Assets\Scripts\Utility\InstantPool.cs" />
-     <Compile Include="Assets\Scripts\Utility\SingleScriptableObject.cs" />
-     <Compile Include="Assets\Scripts\Utility\SingleVariantScriptableObject.cs" />
      <Compile Include="Assets\Scripts\Utility\Singleton.cs" />
      <Compile Include="Assets\IEvent.cs" />
-     <Compile Include="Assets\IEventListener.cs" />
+     <Compile Include="Assets\Scripts\Utility\IInteraptor.cs" />
      <Compile Include="Assets\Scripts\Data\DataManager.cs" />
+     <Compile Include="Assets\Scripts\Utility\SingleScriptableObject.cs" />
+     <Compile Include="Assets\Scripts\Utility\SerializableDictionary.cs" />
+     <Compile Include="Assets\EventManager.cs" />
+     <Compile Include="Assets\IEventListener.cs" />
+     <Compile Include="Assets\ScriptableEvent.cs" />
+     <Compile Include="Assets\ScriptableEventBase.cs" />
+     <Compile Include="Assets\Scripts\Task\TaskBase.cs" />
     <Reference Include="UnityEngine">
         <HintPath>D:/UnityEditor/2020.3.10f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
@@ -275,8 +278,8 @@
     <Reference Include="UnityEditor.UnityConnectModule">
         <HintPath>D:/UnityEditor/2020.3.10f1/Editor/Data/Managed/UnityEngine/UnityEditor.UnityConnectModule.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-        <HintPath>D:/UnityProjects/大きな大きなスーパーマーケットの、/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0/Runtime/Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Sirenix.Utilities.Editor">
+        <HintPath>D:/UnityProjects/大きな大きなスーパーマーケットの、/Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Sirenix.OdinInspector.Editor">
         <HintPath>D:/UnityProjects/大きな大きなスーパーマーケットの、/Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinInspector.Editor.dll</HintPath>
@@ -290,11 +293,11 @@
     <Reference Include="Sirenix.Utilities">
         <HintPath>D:/UnityProjects/大きな大きなスーパーマーケットの、/Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+        <HintPath>D:/UnityProjects/大きな大きなスーパーマーケットの、/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0/Runtime/Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Sirenix.Serialization">
         <HintPath>D:/UnityProjects/大きな大きなスーパーマーケットの、/Assets/Plugins/Sirenix/Assemblies/Sirenix.Serialization.dll</HintPath>
-    </Reference>
-    <Reference Include="Sirenix.Utilities.Editor">
-        <HintPath>D:/UnityProjects/大きな大きなスーパーマーケットの、/Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
         <HintPath>D:/UnityEditor/2020.3.10f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
@@ -662,8 +665,14 @@
     <Reference Include="Unity.2D.Tilemap.Editor">
         <HintPath>D:/UnityProjects/大きな大きなスーパーマーケットの、/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.CacheServer">
+        <HintPath>D:/UnityProjects/大きな大きなスーパーマーケットの、/Library/ScriptAssemblies/UnityEditor.CacheServer.dll</HintPath>
+    </Reference>
     <Reference Include="PsdPlugin">
         <HintPath>D:/UnityProjects/大きな大きなスーパーマーケットの、/Library/ScriptAssemblies/PsdPlugin.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Addressables">
+        <HintPath>D:/UnityProjects/大きな大きなスーパーマーケットの、/Library/ScriptAssemblies/Unity.Addressables.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
         <HintPath>D:/UnityProjects/大きな大きなスーパーマーケットの、/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
@@ -689,8 +698,8 @@
     <Reference Include="Unity.2D.Path.Editor">
         <HintPath>D:/UnityProjects/大きな大きなスーパーマーケットの、/Library/ScriptAssemblies/Unity.2D.Path.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.InternalAPIEditorBridge.001">
-        <HintPath>D:/UnityProjects/大きな大きなスーパーマーケットの、/Library/ScriptAssemblies/Unity.InternalAPIEditorBridge.001.dll</HintPath>
+    <Reference Include="Unity.ResourceManager">
+        <HintPath>D:/UnityProjects/大きな大きなスーパーマーケットの、/Library/ScriptAssemblies/Unity.ResourceManager.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
         <HintPath>D:/UnityProjects/大きな大きなスーパーマーケットの、/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
@@ -700,6 +709,9 @@
     </Reference>
     <Reference Include="Unity.Rider.Editor">
         <HintPath>D:/UnityProjects/大きな大きなスーパーマーケットの、/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.InternalAPIEditorBridge.001">
+        <HintPath>D:/UnityProjects/大きな大きなスーパーマーケットの、/Library/ScriptAssemblies/Unity.InternalAPIEditorBridge.001.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
         <HintPath>D:/UnityProjects/大きな大きなスーパーマーケットの、/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
@@ -728,8 +740,14 @@
     <Reference Include="Unity.2D.Common.Runtime">
         <HintPath>D:/UnityProjects/大きな大きなスーパーマーケットの、/Library/ScriptAssemblies/Unity.2D.Common.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.2D.SpriteShape.Editor">
-        <HintPath>D:/UnityProjects/大きな大きなスーパーマーケットの、/Library/ScriptAssemblies/Unity.2D.SpriteShape.Editor.dll</HintPath>
+    <Reference Include="Unity.ScriptableBuildPipeline">
+        <HintPath>D:/UnityProjects/大きな大きなスーパーマーケットの、/Library/ScriptAssemblies/Unity.ScriptableBuildPipeline.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Addressables.Editor">
+        <HintPath>D:/UnityProjects/大きな大きなスーパーマーケットの、/Library/ScriptAssemblies/Unity.Addressables.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ScriptableBuildPipeline.Editor">
+        <HintPath>D:/UnityProjects/大きな大きなスーパーマーケットの、/Library/ScriptAssemblies/Unity.ScriptableBuildPipeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Common.Editor">
         <HintPath>D:/UnityProjects/大きな大きなスーパーマーケットの、/Library/ScriptAssemblies/Unity.2D.Common.Editor.dll</HintPath>
@@ -737,23 +755,8 @@
     <Reference Include="Unity.2D.SpriteShape.Runtime">
         <HintPath>D:/UnityProjects/大きな大きなスーパーマーケットの、/Library/ScriptAssemblies/Unity.2D.SpriteShape.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Addressables">
-        <HintPath>D:/UnityProjects/大きな大きなスーパーマーケットの、/Library/ScriptAssemblies/Unity.Addressables.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Addressables.Editor">
-        <HintPath>D:/UnityProjects/大きな大きなスーパーマーケットの、/Library/ScriptAssemblies/Unity.Addressables.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.CacheServer">
-        <HintPath>D:/UnityProjects/大きな大きなスーパーマーケットの、/Library/ScriptAssemblies/UnityEditor.CacheServer.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.ResourceManager">
-        <HintPath>D:/UnityProjects/大きな大きなスーパーマーケットの、/Library/ScriptAssemblies/Unity.ResourceManager.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.ScriptableBuildPipeline">
-        <HintPath>D:/UnityProjects/大きな大きなスーパーマーケットの、/Library/ScriptAssemblies/Unity.ScriptableBuildPipeline.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.ScriptableBuildPipeline.Editor">
-        <HintPath>D:/UnityProjects/大きな大きなスーパーマーケットの、/Library/ScriptAssemblies/Unity.ScriptableBuildPipeline.Editor.dll</HintPath>
+    <Reference Include="Unity.2D.SpriteShape.Editor">
+        <HintPath>D:/UnityProjects/大きな大きなスーパーマーケットの、/Library/ScriptAssemblies/Unity.2D.SpriteShape.Editor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -761,13 +764,13 @@
       <Project>{aa83d2d5-65c2-46dd-13e9-7d5fd31ee1f0}</Project>
       <Name>Sirenix.OdinInspector.CompatibilityLayer</Name>
     </ProjectReference>
-    <ProjectReference Include="Sirenix.OdinInspector.CompatibilityLayer.Editor.csproj">
-      <Project>{6bee403b-fd9c-3388-07fe-cf64fafb02cf}</Project>
-      <Name>Sirenix.OdinInspector.CompatibilityLayer.Editor</Name>
-    </ProjectReference>
     <ProjectReference Include="Sirenix.OdinInspector.Modules.UnityMathematics.csproj">
       <Project>{767fffbc-ea2e-4111-d4dc-e59ef1815904}</Project>
       <Name>Sirenix.OdinInspector.Modules.UnityMathematics</Name>
+    </ProjectReference>
+    <ProjectReference Include="Sirenix.OdinInspector.CompatibilityLayer.Editor.csproj">
+      <Project>{6bee403b-fd9c-3388-07fe-cf64fafb02cf}</Project>
+      <Name>Sirenix.OdinInspector.CompatibilityLayer.Editor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

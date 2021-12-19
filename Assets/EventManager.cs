@@ -1,39 +1,83 @@
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using System.Collections.Generic;
+using System;
 using System.Collections;
 
 public class EventManager : Singleton<EventManager>
 {
+    class EventQueue
+    {
+        EventManager parent;
+        List<EventName> nameQueue = new List<EventName>();
+        List<IEventArg> argQueue = new List<IEventArg>();
+        public EventQueue(EventManager parent)
+        {
+            this.parent = parent;
+        }
+
+        public void Stock(EventName name, IEventArg arg)
+        {
+            nameQueue.Add(name);
+            argQueue.Add(arg);
+
+            if (nameQueue.Count == 1)
+            {
+                parent.StartCoroutine(QueueSequence());
+            }
+        }
+
+        IEnumerator QueueSequence()
+        {
+            while (nameQueue.Count != 0)
+            {
+                var arg = argQueue[0];
+                var name = nameQueue[0];
+                var ev = parent.eventTable[name];
+                var task = ev.Notice(arg);
+                yield return new WaitUntil(() => task.compleated);
+                argQueue.RemoveAt(0);
+                nameQueue.RemoveAt(0);
+            }
+        }
+    }
+
+    [Sirenix.OdinInspector.InfoBox("同じList内のEventは同じQueueを使います")]
+    [SerializeField] List<List<EventName>> useQueue;
+    Dictionary<EventName, EventQueue> queueTable = new Dictionary<EventName, EventQueue>();
     [SerializeField] SerializableDictionary<EventName, AssetLabelReference> eventLabelTable = new SerializableDictionary<EventName, AssetLabelReference>();
     Dictionary<EventName, IEvent> eventTable = new Dictionary<EventName, IEvent>();
 
-    public ITask Notice(EventName name)
+    void Start()
     {
-        if (eventTable.TryGetValue(name, out var eve))
+        //キューを準備
+        foreach (var names in useQueue)
         {
-            return eve.Notice();
+            var queue = new EventQueue(this);
+            foreach (var name in names)
+            {
+                queueTable[name] = queue;
+            }
         }
-
-#if DEBUG
-        Debug.LogWarning("no one is listening" + name);
-#endif
-
-        return SmallTask.nullTask;
     }
 
-    public ITask Notice<T>(EventName name, T arg)
-    where T : IEventArg
+    public ITask Notice(EventName name, IEventArg arg)
     {
         if (eventTable.TryGetValue(name, out var eve))
         {
-            var teve = eve as IEvent<T>;
-            if (teve == null)
+            if (queueTable.ContainsKey(name))
             {
-                Debug.LogError(name + " is not event of arg " + typeof(T) + "!" + "(" + eve.GetType() + ")");
+                queueTable[name].Stock(name, arg);
+
+                //これを待つようなことはないように。
+                //あっても思ったような挙動ではない…
+                //これあんまよくないな
+                return SmallTask.nullTask;
             }
-            
-            return teve.Notice(arg);
+            else
+            {
+                return eve.Notice(arg);
+            }
         }
 
 #if DEBUG
@@ -58,6 +102,7 @@ public class EventManager : Singleton<EventManager>
         return task;
     }
 
+    /*
     public ITask Register<T>(IEventListener<T> listener, EventName eventName)
     where T : IEventArg
     {
@@ -83,8 +128,9 @@ public class EventManager : Singleton<EventManager>
             throw new System.Exception(ev + " is not Event of type " + typeof(T));
         }
     }
+    */
 
-
+    /*
     public bool Disregister<T>(IEventListener<T> listener, EventName name)
     where T : IEventArg
     {
@@ -108,6 +154,7 @@ public class EventManager : Singleton<EventManager>
 
         return false;
     }
+    */
 
     public bool Disregister(IEventListener listener, EventName name)
     {
@@ -142,16 +189,6 @@ public class EventManager : Singleton<EventManager>
     {
         yield return StartCoroutine(LoadEvent(name));
         var eve = eventTable[name] as IEvent;
-        eve.Register(listener);
-        task.compleated = true;
-    }
-
-    IEnumerator RegisterRoutine<T>(SmallTask task, EventName name, IEventListener<T> listener)
-    where T : IEventArg
-    {
-        yield return StartCoroutine(LoadEvent(name));
-
-        var eve = eventTable[name] as IEvent<T>;
         eve.Register(listener);
         task.compleated = true;
     }
