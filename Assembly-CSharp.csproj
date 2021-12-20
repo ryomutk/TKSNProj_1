@@ -56,6 +56,10 @@
      <Compile Include="Assets\ScriptableEvent.cs" />
      <Compile Include="Assets\ScriptableEventBase.cs" />
      <Compile Include="Assets\Scripts\Task\TaskBase.cs" />
+     <Compile Include="Assets\Scripts\Data\IDLabels\CharacterLabel.cs" />
+     <Compile Include="Assets\Scripts\Data\DataLink\DataLink.cs" />
+     <Compile Include="Assets\Scripts\Data\DataLink\CharacterDataLink.cs" />
+     <Compile Include="Assets\Scripts\Data\DataType.cs" />
     <Reference Include="UnityEngine">
         <HintPath>D:/UnityEditor/2020.3.10f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
